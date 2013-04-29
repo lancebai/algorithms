@@ -44,7 +44,7 @@ int main(int argc, const char * argv[])
 {
 
     vector<int> iVec(data, data+ ARRAY_SIZE(data));
-    // insert code here...
+
     std::cout << "before sort!\n";
     dump_data(iVec);
     insertion_sort(iVec);
