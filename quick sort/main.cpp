@@ -66,6 +66,14 @@ void dump_data(vector<T>& vData, unsigned int uiLeftBracket, unsigned int uiRigh
 }
 
 
+/**
+ * dump_data
+ * dump the content of data array 
+ *
+ * @param aData the data to be dump
+ * @param uiDataNumber the size of data array
+ * @return nothing useful
+ */
 
 template <typename T>
 void dump_data(T aData[], size_t uiDataNumber)
@@ -107,10 +115,8 @@ unsigned int quick_sort_partition(vector<T> &vData, unsigned int uiIndexStart, u
     
     assert(i <= uiIndexEnd);
     
-    
     //swap pivot with index i
     swap(vData[uiIndexStart], vData[i]);
-    
     
     //i.e. pivot is nth element in aData
     cout << vData[i] << " is " << i << "th element in order" << endl;
@@ -156,7 +162,7 @@ void quick_sort(vector<T> &vData, unsigned int uiStart, unsigned int uiEnd)
         dump_data(vData, uiStart, uiEnd);
         assert(uiPivotIndex >= uiStart && uiPivotIndex <= uiEnd);
         
-        cout << "divide into 2 group" << endl;
+        cout << "divide into 2 groups" << endl;
         cout << "from "<< uiStart << " to " <<  uiPivotIndex - 1 << endl;
         cout << "and " << uiPivotIndex+1 << " to " << uiEnd << endl;
         cout << "===========================" << endl;
@@ -164,6 +170,7 @@ void quick_sort(vector<T> &vData, unsigned int uiStart, unsigned int uiEnd)
         if(uiPivotIndex > uiStart) {
             quick_sort(vData, uiStart, uiPivotIndex - 1);
         }
+
         if(uiPivotIndex < uiEnd) {
             quick_sort(vData, uiPivotIndex+1, uiEnd);
         }
@@ -184,5 +191,6 @@ int main(int argc, const char * argv[])
     quick_sort(iVec, 0, (unsigned int)(iVec.size()-1));
     std::cout << "after sort!\n";
     dump_data(iVec);
-    return 0;}
+    return 0;
+}
 
