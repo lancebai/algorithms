@@ -11,6 +11,8 @@
 #include <vector>
 #include <algorithm>    // std::swap
 #include <assert.h>
+#include <ctime>
+#include <cstdlib>
 using namespace std;
 
 const int data[] = {7, 23, 4, 82, 67, 33, 17, 29, 46};
@@ -97,13 +99,15 @@ void dump_data(T aData[], size_t uiDataNumber)
  * @return the order of vData[uiIndexStart] in vector data
  */
 template <typename T>
-unsigned int quick_sort_partition(vector<T> &vData, unsigned int uiIndexStart, unsigned int uiIndexEnd)
+unsigned int quick_sort_partition(vector<T> &vData, unsigned int uiIndexStart, unsigned int uiIndexEnd, unsigned int uiPivotIndex)
 {
     assert(uiIndexStart >= 0 && uiIndexStart < uiIndexEnd);
     assert(uiIndexEnd >= 1 && uiIndexEnd < vData.size());
     assert(vData.size() >= 0);
+    assert(uiPivotIndex >= uiIndexStart && uiPivotIndex <= uiIndexEnd);
     
     unsigned int i, j;
+    swap(vData[uiIndexStart], vData[uiPivotIndex]);
     for (i = uiIndexStart, j = uiIndexStart+1; j <= uiIndexEnd; j++ ) {
         //cout << "comparing " << vData[j] << " with " << vData[uiIndexStart] << endl;
         if(vData[j] <= vData[uiIndexStart]){
@@ -148,8 +152,6 @@ void quick_sort(vector<T> &vData, unsigned int uiStart, unsigned int uiEnd)
         return;
     }
     
-    cout << "using " << uiStart << "th element ("<< vData[uiStart]<<") as pivot" \
-         << " to partition(" << uiStart << ":" << uiEnd <<")"<< endl;
     cout << "before partition("<< uiStart << ":" << uiEnd << ")"  << endl;
     dump_data(vData, uiStart, uiEnd);
     
@@ -157,7 +159,16 @@ void quick_sort(vector<T> &vData, unsigned int uiStart, unsigned int uiEnd)
     if(uiStart < uiEnd){
         unsigned int uiPivotIndex;
 
-        uiPivotIndex = quick_sort_partition(vData, uiStart, uiEnd);
+        //get a randon pivot index
+        std::srand((unsigned int)std::time(0)); // use current time as seed for random generator
+        unsigned int uiRandom = std::rand();
+        uiRandom = uiRandom%(uiEnd - uiStart + 1) + uiStart;
+
+        cout << "using " << uiRandom << "th element ("<< vData[uiStart]<<") as pivot" \
+             << " to partition(" << uiStart << ":" << uiEnd <<")"<< endl;
+
+
+        uiPivotIndex = quick_sort_partition(vData, uiStart, uiEnd, uiRandom);
         cout << "after partition" << endl;
         dump_data(vData, uiStart, uiEnd);
         assert(uiPivotIndex >= uiStart && uiPivotIndex <= uiEnd);
